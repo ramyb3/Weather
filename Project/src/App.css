@@ -75,7 +75,7 @@ input[type=text], button
 {
     margin: auto;
     background-color:var(--box-backColor);
-    width: 70%;
+    width: 80%;
     height: max-content;
     border: 3px var(--box-border) groove;
     color: azure;
@@ -178,6 +178,7 @@ input[type=text], button
 {
     .heart
     {
+        top: -60px;
         left: 85%;
     }
 }
