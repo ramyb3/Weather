@@ -75,7 +75,7 @@ input[type=text], button
 {
     margin: auto;
     background-color:var(--box-backColor);
-    width: 80%;
+    width: 555px;
     height: max-content;
     border: 3px var(--box-border) groove;
     color: azure;
@@ -172,6 +172,14 @@ input[type=text], button
     color: aliceblue;
     background-color: firebrick;
     font-weight: bold;
+}
+
+@media (max-width: 600px)
+{
+    .box
+    {
+        width: 80%;
+    }
 }
 
 @media (max-width: 520px)
