@@ -16,7 +16,7 @@ function App()
     
     const colorPageButton= ['rgb(123, 185, 171)','white']; // button color of this page
 
-    useEffect(()=> 
+   useEffect(()=> 
     {
         // default button page will be colored
         document.getElementById('home').style.backgroundColor= colorPageButton[0];
@@ -26,7 +26,7 @@ function App()
         window.navigator.permissions && window.navigator.permissions.query({name: 'geolocation'})
         .then(async function(PermissionStatus) 
         {
-            if (PermissionStatus.state == 'granted') 
+            if (PermissionStatus.state == 'granted' || PermissionStatus.state == 'prompt') 
             {
                 // weather in this location
                 window.navigator.geolocation.getCurrentPosition(async(position) => {
@@ -48,7 +48,7 @@ function App()
                 }); 
             }
 
-            else // weather in default location - Tel Aviv
+            if (PermissionStatus.state == 'denied')  // weather in default location - Tel Aviv
             {
                 try
                 {
