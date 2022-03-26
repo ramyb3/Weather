@@ -36,7 +36,7 @@ export const day= (date)=> // get day
 
 export const getData= async(obj,method)=> // get data from api
 {
-    const key='Eisd8x3FpwMA3jFSSWsnUWp8UlRurQLu'; // api key
+    const key='<PUT YOUR API KEY HERE>'; // api key
 
     if(method==1)
     {
