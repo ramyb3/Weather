@@ -16,7 +16,7 @@ function App()
     
     const colorPageButton= ['rgb(123, 185, 171)','white']; // button color of this page
 
-   useEffect(()=> 
+    useEffect(()=> 
     {
         // default button page will be colored
         document.getElementById('home').style.backgroundColor= colorPageButton[0];
@@ -42,7 +42,7 @@ function App()
 
                     catch(e)
                     {
-                        alert('An error has occurred! - check developer tools');
+                        alert('This website has exceeded its daily limit!');
                         console.log(e);
                     }
                 }); 
@@ -61,7 +61,7 @@ function App()
 
                 catch(e)
                 {
-                    alert('An error has occurred! - check developer tools');
+                    alert('This website has exceeded its daily limit!');
                     console.log(e);
                 }
             }
@@ -105,9 +105,11 @@ function App()
 
         <div style={{textAlign: 'center'}}>
 
-            {/* button - shows Fahrenheit or Celsius */}
-            <input type='button' value='C/F' onClick={()=> dispatch({type: "TEMP", payload: !storeData[1]})}/>&nbsp;
-        
+            {storeData.length!=0 ? // button - shows Fahrenheit or Celsius 
+                <input type='button' value='C/F' onClick={()=> dispatch({type: "TEMP", payload: !storeData[1]})}/>
+                : null
+            }&nbsp;
+
             <button id='bt' onClick={()=> setTheme(!theme)}>
                 {theme==false ? // dark or light theme
                     <FontAwesomeIcon icon={faSun} className='sun'/>
