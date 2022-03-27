@@ -23,7 +23,6 @@ function Favorites(props)
         }
 
         setWeather(obj);
-
     },[]); //when favorites page start
 
     const display= async(x)=> //show clicked favorite in home page
@@ -44,7 +43,7 @@ function Favorites(props)
 
         catch(e)
         {
-            alert('An error has occurred! - check developer tools');
+            alert('An error has occurred in favorites! - check developer tools');
             console.log(e);
         }
     }
