@@ -52,7 +52,7 @@ export const getData= async(obj,method)=> // get data from api
 
     if(method==3)
     {
-        let resp= await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${obj}`);
+        let resp= await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${obj}`);
         return resp.data; //get search
     }
 
