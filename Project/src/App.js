@@ -26,7 +26,7 @@ function App()
         window.navigator.permissions && window.navigator.permissions.query({name: 'geolocation'})
         .then(async function(PermissionStatus) 
         {
-            if (PermissionStatus.state == 'granted' || PermissionStatus.state == 'prompt') 
+            if (PermissionStatus.state == 'granted') 
             {
                 // weather in this location
                 window.navigator.geolocation.getCurrentPosition(async(position) => {
@@ -48,7 +48,7 @@ function App()
                 }); 
             }
 
-            if (PermissionStatus.state == 'denied')  // weather in default location - Tel Aviv
+            else  // weather in default location - Tel Aviv
             {
                 try
                 {
