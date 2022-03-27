@@ -33,7 +33,7 @@ function Search()
 
         catch(e)
         {
-            alert('An error has occurred! - check developer tools');
+            alert('An error has occurred in location choosing! - check developer tools');
             console.log(e);
         }
     }
@@ -55,7 +55,9 @@ function Search()
 
                 catch(e)
                 {
-                    alert('An error has occurred! - check developer tools');
+                    setSearch('');
+
+                    alert('An error has occurred in location search! - check developer tools');
                     console.log(e);
                 }
             }
