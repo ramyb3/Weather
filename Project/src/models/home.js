@@ -67,6 +67,24 @@ function Home(props)
 
                                 <div>{day(x.Date)}</div><br/>
 
+                                {index!=0 ? // if today- show night, if not - show day
+                                    <>
+                                        {x.Day.Icon >9 ? // weather icon in day
+                                            <img src={`https://developer.accuweather.com/sites/default/files/${x.Day.Icon}-s.png`}/>
+                                            :
+                                            <img src={`https://developer.accuweather.com/sites/default/files/0${x.Day.Icon}-s.png`}/>
+                                        } 
+                                    </>
+                                    :
+                                    <>
+                                        {x.Night.Icon >9 ? // weather icon in night
+                                            <img src={`https://developer.accuweather.com/sites/default/files/${x.Night.Icon}-s.png`}/>
+                                            :
+                                            <img src={`https://developer.accuweather.com/sites/default/files/0${x.Night.Icon}-s.png`}/>
+                                        } 
+                                    </>
+                                }<br/>
+
                                 {storeData[1]==true ? // temp in C/F
                                     <div>{x.Temperature.Maximum.Value} &#778; F</div>
                                     :
