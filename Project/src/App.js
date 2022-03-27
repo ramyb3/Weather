@@ -22,11 +22,13 @@ function App()
         document.getElementById('home').style.backgroundColor= colorPageButton[0];
         document.getElementById('home').style.color= colorPageButton[1];
 
+        let check=true; //boolean variable to check location
+
         // check permission to user location
         window.navigator.permissions && window.navigator.permissions.query({name: 'geolocation'})
         .then(async function(PermissionStatus) 
         {
-            if (PermissionStatus.state == 'granted') 
+            if (PermissionStatus.state == 'granted' || PermissionStatus.state == 'prompt') 
             {
                 // weather in this location
                 window.navigator.geolocation.getCurrentPosition(async(position) => {
@@ -38,6 +40,8 @@ function App()
                         let days= await getData(data[1],2);
 
                         dispatch({type: "LOAD", payload: [today,days,data]});
+
+                        check=false;
                     }
 
                     catch(e)
@@ -48,7 +52,7 @@ function App()
                 }); 
             }
 
-            else  // weather in default location - Tel Aviv
+            if (check==true) // weather in default location - Tel Aviv 
             {
                 try
                 {
