@@ -10,9 +10,8 @@ import emailjs from "emailjs-com";
 export default function App() {
   const storeData = useSelector((state) => state);
   const dispatch = useDispatch();
-
   const [theme, setTheme] = useState(true); // default - light theme
-
+  const [check, setCheck] = useState(true); // boolean variable to check location
   const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color of this page
 
   //when app start
@@ -21,7 +20,24 @@ export default function App() {
     document.getElementById("home").style.backgroundColor = colorPageButton[0];
     document.getElementById("home").style.color = colorPageButton[1];
 
-    let check = true; //boolean variable to check location
+    const firstLocation = async (coords) => {
+      try {
+        let data = ["Tel Aviv", 215854]; // default city
+
+        if (coords) {
+          data = await getData([coords.latitude, coords.longitude], 4);
+          setCheck(false);
+        }
+
+        const today = await getData(data[1], 1);
+        const days = await getData(data[1], 2);
+
+        dispatch({ type: "LOAD", payload: [today, days, data] });
+      } catch (e) {
+        alert("This website has exceeded its daily limit!");
+        console.log(e);
+      }
+    };
 
     // check permission to user location
     window.navigator.permissions &&
@@ -35,37 +51,13 @@ export default function App() {
             // weather in this location
             window.navigator.geolocation.getCurrentPosition(
               async (position) => {
-                try {
-                  const data = await getData(
-                    [position.coords.latitude, position.coords.longitude],
-                    4
-                  );
-                  const today = await getData(data[1], 1);
-                  const days = await getData(data[1], 2);
-
-                  dispatch({ type: "LOAD", payload: [today, days, data] });
-
-                  check = false;
-                } catch (e) {
-                  alert("This website has exceeded its daily limit!");
-                  console.log(e);
-                }
+                await firstLocation(position.coords);
               }
             );
           }
 
-          if (check === true) {
-            // weather in default location - Tel Aviv
-            try {
-              const data = ["Tel Aviv", 215854];
-              const today = await getData(data[1], 1);
-              const days = await getData(data[1], 2);
-
-              dispatch({ type: "LOAD", payload: [today, days, data] });
-            } catch (e) {
-              alert("This website has exceeded its daily limit!");
-              console.log(e);
-            }
+          if (check) {
+            await firstLocation();
           }
         });
 
@@ -83,13 +75,8 @@ export default function App() {
 
   //every time the theme changes
   useEffect(() => {
-    if (theme) {
-      document.body.classList.add("light");
-      document.body.classList.remove("dark");
-    } else {
-      document.body.classList.add("dark");
-      document.body.classList.remove("light");
-    }
+    document.body.classList.add(theme ? "light" : "dark");
+    document.body.classList.remove(theme ? "dark" : "light");
   }, [theme]);
 
   // this button page will be colored
@@ -103,10 +90,16 @@ export default function App() {
 
   return (
     <>
-      <header>
-        <div>&nbsp;Weather App</div>
-
-        <div>
+      <header
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          paddingLeft: "5px",
+          paddingRight: "5px",
+        }}
+      >
+        <div>Weather App</div>
+        <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
           <Link to="/">
             <input
               id="home"
@@ -115,7 +108,6 @@ export default function App() {
               onClick={(e) => color(e.target)}
             />
           </Link>
-          &nbsp;
           <Link to="favorites">
             <input
               id="fav"
@@ -124,29 +116,31 @@ export default function App() {
               onClick={(e) => color(e.target)}
             />
           </Link>
-          &nbsp;
         </div>
       </header>
-      <br />
-
-      <div style={{ textAlign: "center" }}>
-        {storeData.length !== 0 ? ( // button - shows Fahrenheit or Celsius
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "5px",
+          justifyContent: "center",
+          paddingTop: "10px",
+        }}
+      >
+        {storeData.length !== 0 ? ( // shows Fahrenheit or Celsius
           <input
             type="button"
             value="C/F"
             onClick={() => dispatch({ type: "TEMP", payload: !storeData[1] })}
           />
         ) : null}
-        &nbsp;
         <button id="bt" onClick={() => setTheme(!theme)}>
-          {theme === false ? ( // dark or light theme
-            <FontAwesomeIcon icon={faSun} className="sun" />
-          ) : (
-            <FontAwesomeIcon icon={faMoon} className="moon" />
-          )}
+          <FontAwesomeIcon
+            icon={!theme ? faSun : faMoon}
+            className={!theme ? "sun" : "moon"}
+          />
         </button>
       </div>
-
       <RouteComp />
     </>
   );

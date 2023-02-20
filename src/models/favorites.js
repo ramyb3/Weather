@@ -7,7 +7,6 @@ export default function Favorites(props) {
   const storeData = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [weather, setWeather] = useState([]); //default - no favorites
 
   //when favorites page start
@@ -59,19 +58,29 @@ export default function Favorites(props) {
       {props.favorites.key.map((key, index) => {
         return (
           <div key={index} className="favorites" onClick={() => display(index)}>
-            {props.favorites.name[index]}
-            <br /> {/*location name*/}
+            {/*location name*/}
+            <span>{props.favorites.name[index]}</span>
+
             {weather.length !== 0 ? ( // if all favorites finished to load all data
-              <>
-                {storeData[1] === true ? ( // temp in C/F
-                  <>{weather[index].Temperature.Imperial.Value} &#778; F</>
-                ) : (
-                  <>{weather[index].Temperature.Metric.Value} &#778; C</>
-                )}
-                <br />
-                <br />
-                {weather[index].WeatherText} {/*current weather*/}
-              </>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                <span>
+                  {
+                    //temp in C/F
+                    weather[index].Temperature[
+                      storeData[1] ? "Imperial" : "Metric"
+                    ].Value
+                  }{" "}
+                  &#778; {storeData[1] ? "F" : "C"}
+                </span>
+                {/*current weather*/}
+                <span>{weather[index].WeatherText}</span>
+              </div>
             ) : null}
           </div>
         );

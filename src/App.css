@@ -146,6 +146,7 @@ button {
 
 .searchResults {
   border: 3px rgb(179, 111, 34) solid;
+  margin-top: 2px;
   background-color: aliceblue;
   width: 40%;
   position: fixed;

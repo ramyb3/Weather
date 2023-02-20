@@ -38,6 +38,7 @@ export default function Search() {
   const check = async () => {
     //check english letters
     if (search.search(regex) !== -1) {
+      setSearch("");
       alert("Please write in English!");
     } else {
       //if there's a search
@@ -58,7 +59,7 @@ export default function Search() {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", marginTop: "10px" }}>
       <input
         type="text"
         value={search}
@@ -68,9 +69,6 @@ export default function Search() {
       <button onClick={check} style={{ cursor: "pointer" }}>
         <FontAwesomeIcon icon={faSearch} />
       </button>
-      <br />
-      <br />
-
       {cities.length !== 0 ? ( //if there's a search
         <div className="searchResults">
           {cities.map((city, index) => {

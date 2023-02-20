@@ -30,12 +30,10 @@ export default function Home(props) {
 
   return (
     <>
-      <br />
-
       <Search />
 
       {storeData.length !== 0 ? ( // if the store finished to load all data
-        <div className="box">
+        <div className="box" style={{ marginTop: "10px" }}>
           {storeData[0][0].WeatherIcon > 9 ? ( // weather icon
             <img
               alt=""
@@ -48,7 +46,7 @@ export default function Home(props) {
             />
           )}
           <div className="all">{storeData[0][2][0]}</div> {/*city's name */}
-          {storeData[1] === true ? ( // temp in C/F
+          {storeData[1] ? ( // temp in C/F
             <div className="all">
               {storeData[0][0].Temperature.Imperial.Value} &#778; F
             </div>
@@ -71,8 +69,8 @@ export default function Home(props) {
               className="heart"
             />
           )}
-          <div className="weather">{storeData[0][0].WeatherText}</div>{" "}
           {/*current weather*/}
+          <div className="weather">{storeData[0][0].WeatherText}</div>
           <div className="container" style={{ flexWrap: "wrap" }}>
             {storeData[0][1].map((data, index) => {
               //5 days weather forecast
@@ -112,7 +110,7 @@ export default function Home(props) {
                   )}
                   <br />
 
-                  {storeData[1] === true ? ( // temp in C/F
+                  {storeData[1] ? ( // temp in C/F
                     <div>{data.Temperature.Maximum.Value} &#778; F</div>
                   ) : (
                     <div>{FtoC(data.Temperature.Maximum.Value)} &#778; C</div>
