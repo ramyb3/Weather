@@ -1,40 +1,43 @@
 import { getData } from "./route";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function Favorites(props) {
+export default function Favorites(props) {
   const storeData = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [weather, setWeather] = useState([]); //default - no favorites
 
-  useEffect(async () => {
-    let obj = [],
-      temp;
+  //when favorites page start
+  useEffect(() => {
+    const getFavorites = async () => {
+      const arr = [];
+      let obj;
 
-    for (var i = 0; i < props.favorites.key.length; i++) {
-      temp = await getData(props.favorites.key[i], 1);
-      obj.push(temp);
-    }
+      for (let i = 0; i < props.favorites.key.length; i++) {
+        obj = await getData(props.favorites.key[i], 1);
+        arr.push(obj);
+      }
 
-    setWeather(obj);
-  }, []); //when favorites page start
+      setWeather(arr);
+    };
 
-  const display = async (
-    x //show clicked favorite in home page
-  ) => {
+    getFavorites();
+  }, []);
+
+  //show clicked favorite in home page
+  const display = async (index) => {
     try {
-      let days = await getData(props.favorites.key[x], 2);
+      const days = await getData(props.favorites.key[index], 2);
 
       dispatch({
         type: "LOAD",
         payload: [
-          weather[x],
+          weather[index],
           days,
-          [props.favorites.name[x], props.favorites.key[x]],
+          [props.favorites.name[index], props.favorites.key[index]],
         ],
       });
 
@@ -52,37 +55,27 @@ function Favorites(props) {
   };
 
   return (
-    <>
-      <br />
-
-      <div className="container" style={{ flexWrap: "wrap" }}>
-        {props.favorites.key.map((x, index) => {
-          return (
-            <div
-              key={index}
-              className="favorites"
-              onClick={() => display(index)}
-            >
-              {props.favorites.name[index]}
-              <br /> {/*location name*/}
-              {weather.length != 0 ? ( // if all favorites finished to load all data
-                <>
-                  {storeData[1] == true ? ( // temp in C/F
-                    <>{weather[index].Temperature.Imperial.Value} &#778; F</>
-                  ) : (
-                    <>{weather[index].Temperature.Metric.Value} &#778; C</>
-                  )}
-                  <br />
-                  <br />
-                  {weather[index].WeatherText} {/*current weather*/}
-                </>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
-    </>
+    <div className="container" style={{ flexWrap: "wrap", marginTop: "5px" }}>
+      {props.favorites.key.map((key, index) => {
+        return (
+          <div key={index} className="favorites" onClick={() => display(index)}>
+            {props.favorites.name[index]}
+            <br /> {/*location name*/}
+            {weather.length !== 0 ? ( // if all favorites finished to load all data
+              <>
+                {storeData[1] === true ? ( // temp in C/F
+                  <>{weather[index].Temperature.Imperial.Value} &#778; F</>
+                ) : (
+                  <>{weather[index].Temperature.Metric.Value} &#778; C</>
+                )}
+                <br />
+                <br />
+                {weather[index].WeatherText} {/*current weather*/}
+              </>
+            ) : null}
+          </div>
+        );
+      })}
+    </div>
   );
 }
-
-export default Favorites;
