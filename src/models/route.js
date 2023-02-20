@@ -20,31 +20,6 @@ export default function RouteComp() {
   );
 }
 
-// Fahrenheit to Celsius
-export const FtoC = (f) => {
-  const c = (f - 32.0) / 1.8;
-
-  return c.toFixed(1);
-};
-
-// get day
-export const day = (date) => {
-  const arr = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  date = new Date(date);
-  date = date.getDay();
-
-  return arr[date];
-};
-
 // get data from api
 export const getData = async (obj, method) => {
   const key = process.env.REACT_APP_API_KEY; // api key

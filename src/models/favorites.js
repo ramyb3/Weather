@@ -70,13 +70,7 @@ export default function Favorites(props) {
                 }}
               >
                 <span>
-                  {
-                    //temp in C/F
-                    weather[index].Temperature[
-                      storeData[1] ? "Imperial" : "Metric"
-                    ].Value
-                  }{" "}
-                  &#778; {storeData[1] ? "F" : "C"}
+                  <Temperature data={weather[index]} condition={storeData[1]} />
                 </span>
                 {/*current weather*/}
                 <span>{weather[index].WeatherText}</span>
@@ -86,5 +80,26 @@ export default function Favorites(props) {
         );
       })}
     </div>
+  );
+}
+
+//temp in C/F
+export function Temperature(props) {
+  // Fahrenheit to Celsius
+  const FtoC = (f) => {
+    const c = (f - 32.0) / 1.8;
+
+    return c.toFixed(1);
+  };
+
+  return (
+    <>
+      {typeof props.data === "object"
+        ? props.data.Temperature[props.condition ? "Imperial" : "Metric"].Value
+        : props.condition
+        ? props.data
+        : FtoC(props.data)}{" "}
+      &#778; {props.condition ? "F" : "C"}
+    </>
   );
 }

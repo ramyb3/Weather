@@ -1,8 +1,8 @@
-import { FtoC, day } from "./route";
 import Search from "./search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { Temperature } from "./favorites";
 
 export default function Home(props) {
   const storeData = useSelector((state) => state);
@@ -28,47 +28,45 @@ export default function Home(props) {
     }
   };
 
+  // get day
+  const day = (date) => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    date = new Date(date);
+    date = date.getDay();
+
+    return days[date];
+  };
+
   return (
     <>
       <Search />
 
       {storeData.length !== 0 ? ( // if the store finished to load all data
         <div className="box" style={{ marginTop: "10px" }}>
-          {storeData[0][0].WeatherIcon > 9 ? ( // weather icon
-            <img
-              alt=""
-              src={`https://developer.accuweather.com/sites/default/files/${storeData[0][0].WeatherIcon}-s.png`}
-            />
-          ) : (
-            <img
-              alt=""
-              src={`https://developer.accuweather.com/sites/default/files/0${storeData[0][0].WeatherIcon}-s.png`}
-            />
-          )}
+          <Image data={storeData[0][0].WeatherIcon} />
           <div className="all">{storeData[0][2][0]}</div> {/*city's name */}
-          {storeData[1] ? ( // temp in C/F
-            <div className="all">
-              {storeData[0][0].Temperature.Imperial.Value} &#778; F
-            </div>
-          ) : (
-            <div className="all">
-              {storeData[0][0].Temperature.Metric.Value} &#778; C
-            </div>
-          )}
-          {props.favorites.key.includes(storeData[0][2][1]) ? ( // this city favorite or no
-            <FontAwesomeIcon
-              style={{ color: "red" }}
-              icon={faHeart}
-              onClick={(e) => fav(e.target)}
-              className="heart"
-            />
-          ) : (
-            <FontAwesomeIcon
-              icon={faHeart}
-              onClick={(e) => fav(e.target)}
-              className="heart"
-            />
-          )}
+          <div className="all">
+            <Temperature data={storeData[0][0]} condition={storeData[1]} />
+          </div>
+          <FontAwesomeIcon // this city favorite or no
+            style={
+              props.favorites.key.includes(storeData[0][2][1])
+                ? { color: "red" }
+                : {}
+            }
+            icon={faHeart}
+            onClick={(e) => fav(e.target)}
+            className="heart"
+          />
           {/*current weather*/}
           <div className="weather">{storeData[0][0].WeatherText}</div>
           <div className="container" style={{ flexWrap: "wrap" }}>
@@ -76,45 +74,17 @@ export default function Home(props) {
               //5 days weather forecast
               return (
                 <div key={index} className="forecast">
-                  <div>{day(data.Date)}</div>
-                  <br />
+                  <div style={{ paddingBottom: "20px" }}>{day(data.Date)}</div>
 
-                  {index !== 0 ? ( // if today- show night, if not - show day
-                    <>
-                      {data.Day.Icon > 9 ? ( // weather icon in day
-                        <img
-                          alt=""
-                          src={`https://developer.accuweather.com/sites/default/files/${data.Day.Icon}-s.png`}
-                        />
-                      ) : (
-                        <img
-                          alt=""
-                          src={`https://developer.accuweather.com/sites/default/files/0${data.Day.Icon}-s.png`}
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {data.Night.Icon > 9 ? ( // weather icon in night
-                        <img
-                          alt=""
-                          src={`https://developer.accuweather.com/sites/default/files/${data.Night.Icon}-s.png`}
-                        />
-                      ) : (
-                        <img
-                          alt=""
-                          src={`https://developer.accuweather.com/sites/default/files/0${data.Night.Icon}-s.png`}
-                        />
-                      )}
-                    </>
-                  )}
-                  <br />
+                  {/*if today- show night, if not - show day */}
+                  <Image data={data[index !== 0 ? "Day" : "Night"].Icon} />
 
-                  {storeData[1] ? ( // temp in C/F
-                    <div>{data.Temperature.Maximum.Value} &#778; F</div>
-                  ) : (
-                    <div>{FtoC(data.Temperature.Maximum.Value)} &#778; C</div>
-                  )}
+                  <div>
+                    <Temperature
+                      data={data.Temperature.Maximum.Value}
+                      condition={storeData[1]}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -122,5 +92,16 @@ export default function Home(props) {
         </div>
       ) : null}
     </>
+  );
+}
+
+function Image(props) {
+  return (
+    <img
+      alt=""
+      src={`https://developer.accuweather.com/sites/default/files/${
+        props.data > 9 ? "" : "0"
+      }${props.data}-s.png`}
+    />
   );
 }
