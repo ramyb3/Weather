@@ -12,5 +12,5 @@ You may also see any lint errors in the console.
 
 ### API KEY 
 
-to get api key for yourself go to [https://developer.accuweather.com/](https://developer.accuweather.com/) and create a user.
+to get api key for yourself go to [https://developer.accuweather.com/](https://developer.accuweather.com/) and create a user.\
 after that create ".env.local" file and put the api key inside REACT_APP_API_KEY variable.
