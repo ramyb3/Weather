@@ -1,0 +1,218 @@
+.light
+{
+    --body-color: deepskyblue;
+    --header-color: coral;
+    --header-border: black;
+    --button-color: lightgoldenrodyellow;
+    --box-backColor: lightseagreen;
+    --box-border: darkorange;
+    --favorites-backColor: lightcyan;
+    --favorites-color: mediumslateblue;
+    --favHover-color: beige;
+    --favHover-backColor: darkslategray;
+    --forecast-border: beige;
+    --forecast-backColor: grey;
+}
+
+.dark
+{
+    --body-color: rgb(5, 11, 44);
+    --header-color: dimgrey;
+    --header-border: blanchedalmond;
+    --button-color: lightpink;
+    --box-border: beige;
+    --box-backColor: darkgrey;
+    --favorites-backColor: darkcyan;
+    --favorites-color: lightcoral;
+    --favHover-color: darkred;
+    --favHover-backColor: lightgrey; 
+    --forecast-border: rgb(23, 37, 27);
+    --forecast-backColor: lightsalmon;
+}
+
+body
+{
+    font-size: 15px;
+    background-color: var(--body-color);
+}
+
+header
+{
+    display: flex;
+    background-color: var(--header-color);
+    padding-bottom: 5px; 
+    padding-top: 5px; 
+    border-bottom: 2px var(--header-border) solid;
+    justify-content: space-between;
+}
+
+header div, input[type=button], #bt, .moon, .sun
+{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--header-border);
+}
+
+input[type=button], #bt
+{
+    background-color:var(--button-color);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+input[type=text], button
+{
+    font-size: 1rem;
+}
+
+.moon
+{
+    color: black;
+}
+
+.sun
+{
+    color: yellow;
+}
+
+.box
+{
+    margin: auto;
+    background-color:var(--box-backColor);
+    width: 555px;
+    height: max-content;
+    border: 3px var(--box-border) groove;
+    color: azure;
+    font-weight: bold;
+}
+
+.weather
+{
+    font-size: 2.5rem;
+    position: relative;
+    text-align: center;
+    top: -50px;
+}
+
+.heart
+{
+    font-size: 2rem;
+    position: relative;
+    top: -100px;
+    left: 90%;
+    color: white;
+    cursor: pointer;
+}
+
+.all
+{
+    font-size: 1.5rem;
+    position: relative;
+    top: -45px;
+    left: 70px;
+}
+
+.container
+{
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    top: 5%;
+}
+
+.forecast
+{
+    border: 3px var(--forecast-border) dashed;
+    background-color: var(--forecast-backColor);
+    border-radius: 15px;
+    height: max-content;
+    width: 6rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+}
+
+.favorites
+{
+    border: 3px rgb(145, 56, 105) solid;
+    height: 11rem;
+    width: 8rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--favorites-backColor);
+    color: var(--favorites-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.favorites:hover
+{
+    color:var(--favHover-color);
+    background-color:var(--favHover-backColor);
+}
+
+.searchResults
+{
+    border: 3px rgb(179, 111, 34) solid;
+    background-color: aliceblue;
+    width: 40%; 
+    position: fixed;
+    z-index: 1;
+    left: 30%;
+    overflow: auto;
+}
+
+.result
+{
+    border-bottom: 1px black solid;
+    list-style: none;
+    cursor: pointer;
+}
+
+.result:hover
+{
+    color: aliceblue;
+    background-color: firebrick;
+    font-weight: bold;
+}
+
+@media (max-width: 600px)
+{
+    .box
+    {
+        width: 80%;
+    }
+}
+
+@media (max-width: 520px)
+{
+    .heart
+    {
+        top: -60px;
+        left: 85%;
+    }
+}
+
+@media (max-width: 380px)
+{
+    .searchResults
+    {
+        width: 55%;
+        margin-left: -50px;
+    } 
+
+    .favorites
+    {
+        height: 9rem;
+        font-size: 1.2rem;
+    }
+
+    header div, header input[type=button]
+    {
+        font-size: 1rem;
+    }
+}
