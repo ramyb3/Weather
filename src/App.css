@@ -3,14 +3,14 @@
   --header-color: coral;
   --header-border: black;
   --button-color: lightgoldenrodyellow;
-  --box-backColor: lightseagreen;
+  --box-bgColor: lightseagreen;
   --box-border: darkorange;
-  --favorites-backColor: lightcyan;
+  --favorites-bgColor: lightcyan;
   --favorites-color: mediumslateblue;
   --favHover-color: beige;
-  --favHover-backColor: darkslategray;
+  --favHover-bgColor: darkslategray;
   --forecast-border: beige;
-  --forecast-backColor: grey;
+  --forecast-bgColor: grey;
 }
 
 .dark {
@@ -19,13 +19,13 @@
   --header-border: blanchedalmond;
   --button-color: lightpink;
   --box-border: beige;
-  --box-backColor: darkgrey;
-  --favorites-backColor: darkcyan;
+  --box-bgColor: darkgrey;
+  --favorites-bgColor: darkcyan;
   --favorites-color: lightcoral;
   --favHover-color: darkred;
-  --favHover-backColor: lightgrey;
+  --favHover-bgColor: lightgrey;
   --forecast-border: rgb(23, 37, 27);
-  --forecast-backColor: lightsalmon;
+  --forecast-bgColor: lightsalmon;
 }
 
 body {
@@ -43,38 +43,25 @@ header {
 }
 
 header div,
-input[type="button"],
-#bt,
-.moon,
-.sun {
+.bt {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--header-border);
 }
 
-input[type="button"],
-#bt {
+.bt {
   background-color: var(--button-color);
   border-radius: 20px;
-  cursor: pointer;
 }
 
-input[type="text"],
 button {
   font-size: 1rem;
-}
-
-.moon {
-  color: black;
-}
-
-.sun {
-  color: yellow;
+  cursor: pointer;
 }
 
 .box {
   margin: auto;
-  background-color: var(--box-backColor);
+  background-color: var(--box-bgColor);
   width: 555px;
   height: max-content;
   border: 3px var(--box-border) groove;
@@ -94,7 +81,6 @@ button {
   position: relative;
   top: -100px;
   left: 90%;
-  color: white;
   cursor: pointer;
 }
 
@@ -110,11 +96,12 @@ button {
   justify-content: space-evenly;
   position: relative;
   top: 5%;
+  flex-wrap: wrap;
 }
 
 .forecast {
   border: 3px var(--forecast-border) dashed;
-  background-color: var(--forecast-backColor);
+  background-color: var(--forecast-bgColor);
   border-radius: 15px;
   height: max-content;
   width: 6rem;
@@ -130,7 +117,7 @@ button {
   width: 8rem;
   text-align: center;
   cursor: pointer;
-  background-color: var(--favorites-backColor);
+  background-color: var(--favorites-bgColor);
   color: var(--favorites-color);
   font-size: 1.5rem;
   font-weight: bold;
@@ -141,7 +128,7 @@ button {
 
 .favorites:hover {
   color: var(--favHover-color);
-  background-color: var(--favHover-backColor);
+  background-color: var(--favHover-bgColor);
 }
 
 .searchResults {
@@ -192,7 +179,7 @@ button {
   }
 
   header div,
-  header input[type="button"] {
+  header {
     font-size: 1rem;
   }
 }

@@ -23,31 +23,32 @@ export default function RouteComp() {
 // get data from api
 export const getData = async (obj, method) => {
   const key = process.env.REACT_APP_API_KEY; // api key
+  const url = "https://dataservice.accuweather.com";
 
   if (method === 1) {
     const resp = await axios.get(
-      `https://dataservice.accuweather.com/currentconditions/v1/${obj}?apikey=${key}`
+      `${url}/currentconditions/v1/${obj}?apikey=${key}`
     );
 
-    return resp.data[0]; //get now city weather
+    return resp.data[0]; //get current city weather
   }
   if (method === 2) {
     const resp = await axios.get(
-      `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${obj}?apikey=${key}`
+      `${url}/forecasts/v1/daily/5day/${obj}?apikey=${key}`
     );
 
     return resp.data.DailyForecasts; //get 5-days city weather
   }
   if (method === 3) {
     const resp = await axios.get(
-      `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${key}&q=${obj}`
+      `${url}/locations/v1/cities/autocomplete?apikey=${key}&q=${obj}`
     );
 
     return resp.data; //get search
   }
   if (method === 4) {
     const resp = await axios.get(
-      `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${key}&q=${obj[0]}%2C${obj[1]}`
+      `${url}/locations/v1/cities/geoposition/search?apikey=${key}&q=${obj[0]}%2C${obj[1]}`
     );
 
     return [resp.data.LocalizedName, resp.data.Key]; //get this location

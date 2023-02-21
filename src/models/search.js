@@ -64,9 +64,10 @@ export default function Search() {
         type="text"
         value={search}
         placeholder="Search"
+        style={{ fontSize: "1rem" }}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button onClick={check} style={{ cursor: "pointer" }}>
+      <button onClick={check}>
         <FontAwesomeIcon icon={faSearch} />
       </button>
       {cities.length !== 0 ? ( //if there's a search

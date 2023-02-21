@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import emailjs from "emailjs-com";
 
+export const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color of this page
+
 export default function App() {
   const storeData = useSelector((state) => state);
   const dispatch = useDispatch();
   const [theme, setTheme] = useState(true); // default - light theme
   const [check, setCheck] = useState(true); // boolean variable to check location
-  const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color of this page
 
   //when app start
   useEffect(() => {
@@ -101,20 +102,14 @@ export default function App() {
         <div>Weather App</div>
         <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
           <Link to="/">
-            <input
-              id="home"
-              type="button"
-              value="Home"
-              onClick={(e) => color(e.target)}
-            />
+            <button className="bt" id="home" onClick={(e) => color(e.target)}>
+              Home
+            </button>
           </Link>
           <Link to="favorites">
-            <input
-              id="fav"
-              type="button"
-              value="Favorites"
-              onClick={(e) => color(e.target)}
-            />
+            <button className="bt" id="fav" onClick={(e) => color(e.target)}>
+              Favorites
+            </button>
           </Link>
         </div>
       </header>
@@ -125,20 +120,19 @@ export default function App() {
           gap: "5px",
           justifyContent: "center",
           paddingTop: "10px",
+          paddingBottom: "10px",
         }}
       >
         {storeData.length !== 0 ? ( // shows Fahrenheit or Celsius
-          <input
-            type="button"
-            value="C/F"
+          <button
+            className="bt"
             onClick={() => dispatch({ type: "TEMP", payload: !storeData[1] })}
-          />
+          >
+            C/F
+          </button>
         ) : null}
-        <button id="bt" onClick={() => setTheme(!theme)}>
-          <FontAwesomeIcon
-            icon={!theme ? faSun : faMoon}
-            className={!theme ? "sun" : "moon"}
-          />
+        <button className="bt" onClick={() => setTheme(!theme)}>
+          <FontAwesomeIcon icon={!theme ? faSun : faMoon} />
         </button>
       </div>
       <RouteComp />

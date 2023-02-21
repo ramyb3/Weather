@@ -1,4 +1,5 @@
 import { getData } from "./route";
+import { colorPageButton } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -43,8 +44,8 @@ export default function Favorites(props) {
       // home button page will be colored
       document.getElementById("fav").style = "";
       document.getElementById("home").style.backgroundColor =
-        "rgb(123, 185, 171)";
-      document.getElementById("home").style.color = "white";
+        colorPageButton[0];
+      document.getElementById("home").style.color = colorPageButton[1];
 
       navigate("/");
     } catch (e) {
@@ -54,7 +55,7 @@ export default function Favorites(props) {
   };
 
   return (
-    <div className="container" style={{ flexWrap: "wrap", marginTop: "5px" }}>
+    <div className="container">
       {props.favorites.key.map((key, index) => {
         return (
           <div key={index} className="favorites" onClick={() => display(index)}>

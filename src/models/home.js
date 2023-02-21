@@ -8,23 +8,12 @@ export default function Home(props) {
   const storeData = useSelector((state) => state);
 
   // favorites func
-  const fav = (e) => {
+  const fav = () => {
     if (!props.favorites.key.includes(storeData[0][2][1])) {
       props.callback({
         key: [...props.favorites.key, storeData[0][2][1]],
         name: [...props.favorites.name, storeData[0][2][0]],
       });
-
-      e.style.color = "red";
-    } else {
-      const index = props.favorites.key.indexOf(storeData[0][2][1]);
-
-      props.callback({
-        key: props.favorites.key.filter((key) => key !== storeData[0][2][1]),
-        name: props.favorites.name.filter((name, i) => i !== index),
-      });
-
-      e.style.color = "white";
     }
   };
 
@@ -64,12 +53,12 @@ export default function Home(props) {
                 : {}
             }
             icon={faHeart}
-            onClick={(e) => fav(e.target)}
+            onClick={fav}
             className="heart"
           />
           {/*current weather*/}
           <div className="weather">{storeData[0][0].WeatherText}</div>
-          <div className="container" style={{ flexWrap: "wrap" }}>
+          <div className="container">
             {storeData[0][1].map((data, index) => {
               //5 days weather forecast
               return (
