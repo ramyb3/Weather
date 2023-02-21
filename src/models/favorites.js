@@ -54,29 +54,27 @@ export default function Favorites(props) {
     }
   };
 
+  // if all favorites finished to load all data
+  if (weather.length === 0) {
+    return null;
+  }
+
   return (
     <div className="container">
-      {props.favorites.key.map((key, index) => {
+      {props.favorites.key.map((fav, index) => {
         return (
           <div key={index} className="favorites" onClick={() => display(index)}>
-            {/*location name*/}
             <span>{props.favorites.name[index]}</span>
-
-            {weather.length !== 0 ? ( // if all favorites finished to load all data
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                <span>
-                  <Temperature data={weather[index]} condition={storeData[1]} />
-                </span>
-                {/*current weather*/}
-                <span>{weather[index].WeatherText}</span>
-              </div>
-            ) : null}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <Temperature data={weather[index]} condition={storeData[1]} />
+              <span>{weather[index].WeatherText}</span>
+            </div>
           </div>
         );
       })}
@@ -86,7 +84,6 @@ export default function Favorites(props) {
 
 //temp in C/F
 export function Temperature(props) {
-  // Fahrenheit to Celsius
   const FtoC = (f) => {
     const c = (f - 32.0) / 1.8;
 

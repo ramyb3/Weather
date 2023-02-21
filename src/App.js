@@ -123,14 +123,14 @@ export default function App() {
           paddingBottom: "10px",
         }}
       >
-        {storeData.length !== 0 ? ( // shows Fahrenheit or Celsius
-          <button
-            className="bt"
-            onClick={() => dispatch({ type: "TEMP", payload: !storeData[1] })}
-          >
-            C/F
-          </button>
-        ) : null}
+        {/* {storeData.length !== 0 ? ( */}
+        <button
+          className="bt"
+          onClick={() => dispatch({ type: "TEMP", payload: !storeData[1] })}
+        >
+          C/F
+        </button>
+        {/* ) : null} */}
         <button className="bt" onClick={() => setTheme(!theme)}>
           <FontAwesomeIcon icon={!theme ? faSun : faMoon} />
         </button>

@@ -70,10 +70,9 @@ export default function Search() {
       <button onClick={check}>
         <FontAwesomeIcon icon={faSearch} />
       </button>
-      {cities.length !== 0 ? ( //if there's a search
+      {cities.length !== 0 ? (
         <div className="searchResults">
           {cities.map((city, index) => {
-            // shows city and country names
             return (
               <li
                 className="result"

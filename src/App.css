@@ -42,6 +42,11 @@ header {
   justify-content: space-between;
 }
 
+button {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 header div,
 .bt {
   font-size: 1.5rem;
@@ -54,16 +59,11 @@ header div,
   border-radius: 20px;
 }
 
-button {
-  font-size: 1rem;
-  cursor: pointer;
-}
-
 .box {
   margin: auto;
+  margin-top: 10px;
   background-color: var(--box-bgColor);
   width: 555px;
-  height: max-content;
   border: 3px var(--box-border) groove;
   color: azure;
   font-weight: bold;
@@ -71,44 +71,34 @@ button {
 
 .weather {
   font-size: 2.5rem;
-  position: relative;
+  padding-top: 30px;
+  padding-bottom: 30px;
   text-align: center;
-  top: -50px;
 }
 
 .heart {
   font-size: 2rem;
-  position: relative;
-  top: -100px;
-  left: 90%;
+  padding-right: 5px;
   cursor: pointer;
-}
-
-.all {
-  font-size: 1.5rem;
-  position: relative;
-  top: -45px;
-  left: 70px;
 }
 
 .container {
   display: flex;
   justify-content: space-evenly;
-  position: relative;
-  top: 5%;
   flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+  gap: 5px;
 }
 
 .forecast {
   border: 3px var(--forecast-border) dashed;
   background-color: var(--forecast-bgColor);
   border-radius: 15px;
-  height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 6rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
+  gap: 15px;
 }
 
 .favorites {
@@ -160,13 +150,6 @@ button {
   }
 }
 
-@media (max-width: 520px) {
-  .heart {
-    top: -60px;
-    left: 85%;
-  }
-}
-
 @media (max-width: 380px) {
   .searchResults {
     width: 55%;
@@ -179,7 +162,7 @@ button {
   }
 
   header div,
-  header {
+  .bt {
     font-size: 1rem;
   }
 }
