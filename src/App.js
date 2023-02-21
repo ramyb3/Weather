@@ -66,12 +66,12 @@ export default function App() {
       message: `weather:\n${navigator.userAgent};\nresolution: ${window.screen.width} X ${window.screen.height}`,
     };
 
-    // emailjs.send(
-    //   process.env.REACT_APP_EMAIL_JS_SERVICE,
-    //   process.env.REACT_APP_EMAIL_JS_TEMPLATE,
-    //   templateParams,
-    //   process.env.REACT_APP_EMAIL_JS_USER
-    // );
+    emailjs.send(
+      process.env.REACT_APP_EMAIL_JS_SERVICE,
+      process.env.REACT_APP_EMAIL_JS_TEMPLATE,
+      templateParams,
+      process.env.REACT_APP_EMAIL_JS_USER
+    );
   }, []);
 
   //every time the theme changes
@@ -92,15 +92,14 @@ export default function App() {
   return (
     <>
       <header
+        className="flex-row"
         style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingLeft: "5px",
-          paddingRight: "5px",
+          paddingLeft: "0.2rem",
+          paddingRight: "0.2rem",
         }}
       >
         <div>Weather App</div>
-        <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
+        <div className="flex-row" style={{ gap: "0.2rem" }}>
           <Link to="/">
             <button className="bt" id="home" onClick={(e) => color(e.target)}>
               Home
@@ -114,23 +113,20 @@ export default function App() {
         </div>
       </header>
       <div
+        className="flex-row"
         style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "5px",
+          gap: "0.2rem",
           justifyContent: "center",
-          paddingTop: "10px",
-          paddingBottom: "10px",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
         }}
       >
-        {/* {storeData.length !== 0 ? ( */}
         <button
           className="bt"
           onClick={() => dispatch({ type: "TEMP", payload: !storeData[1] })}
         >
           C/F
         </button>
-        {/* ) : null} */}
         <button className="bt" onClick={() => setTheme(!theme)}>
           <FontAwesomeIcon icon={!theme ? faSun : faMoon} />
         </button>

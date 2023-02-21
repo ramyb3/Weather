@@ -36,8 +36,8 @@ body {
 header {
   display: flex;
   background-color: var(--header-color);
-  padding-bottom: 5px;
-  padding-top: 5px;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
   border-bottom: 2px var(--header-border) solid;
   justify-content: space-between;
 }
@@ -59,9 +59,20 @@ header div,
   border-radius: 20px;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .box {
   margin: auto;
-  margin-top: 10px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   background-color: var(--box-bgColor);
   width: 555px;
   border: 3px var(--box-border) groove;
@@ -71,14 +82,14 @@ header div,
 
 .weather {
   font-size: 2.5rem;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   text-align: center;
 }
 
 .heart {
   font-size: 2rem;
-  padding-right: 5px;
+  padding-right: 0.5rem;
   cursor: pointer;
 }
 
@@ -87,7 +98,7 @@ header div,
   justify-content: space-evenly;
   flex-wrap: wrap;
   margin-bottom: 0.5rem;
-  gap: 5px;
+  gap: 0.2rem;
 }
 
 .forecast {
@@ -98,22 +109,22 @@ header div,
   flex-direction: column;
   align-items: center;
   width: 6rem;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .favorites {
   border: 3px rgb(145, 56, 105) solid;
   height: 11rem;
   width: 8rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   background-color: var(--favorites-bgColor);
   color: var(--favorites-color);
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 2rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  gap: 0.5rem;
+  text-align: center;
 }
 
 .favorites:hover {
@@ -123,13 +134,11 @@ header div,
 
 .searchResults {
   border: 3px rgb(179, 111, 34) solid;
-  margin-top: 2px;
+  margin-top: 0.1rem;
   background-color: aliceblue;
   width: 40%;
-  position: fixed;
-  z-index: 1;
+  position: absolute;
   left: 30%;
-  overflow: auto;
 }
 
 .result {
@@ -152,8 +161,8 @@ header div,
 
 @media (max-width: 380px) {
   .searchResults {
-    width: 55%;
-    margin-left: -50px;
+    width: 70%;
+    left: 15%;
   }
 
   .favorites {

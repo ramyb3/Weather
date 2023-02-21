@@ -35,7 +35,7 @@ export default function Home(props) {
     return days[date];
   };
 
-  // if the store finished to load all data
+  // if the store not finished to load all data
   if (storeData.length === 0) {
     return null;
   }
@@ -46,26 +46,22 @@ export default function Home(props) {
 
       <div className="box">
         <div
+          className="flex-row"
           style={{
-            display: "flex",
-            flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
             fontSize: " 1.5rem",
           }}
         >
           <div
+            className="flex-row"
             style={{
-              display: "flex",
-              flexDirection: "row",
               alignItems: "center",
-              gap: "5px",
+              gap: "0.5rem",
             }}
           >
             <Image data={storeData[0][0].WeatherIcon} />
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "5px" }}
-            >
+            <div className="flex-column" style={{ gap: "0.2rem" }}>
               <span>{storeData[0][2][0]}</span>
               <Temperature data={storeData[0][0]} condition={storeData[1]} />
             </div>
@@ -101,6 +97,7 @@ export default function Home(props) {
   );
 }
 
+// get weather icon
 function Image(props) {
   return (
     <img

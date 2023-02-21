@@ -5,11 +5,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function Search() {
-  const [search, setSearch] = useState("");
-  const [cities, setCities] = useState([]); // cities in search
   const dispatch = useDispatch();
-
-  const regex = /[^\w\s]/g; // english letters
+  const [search, setSearch] = useState("");
+  const [cities, setCities] = useState([]);
 
   //every time the search changes
   useEffect(() => {
@@ -24,7 +22,6 @@ export default function Search() {
       const days = await getData(city[1], 2);
 
       setSearch("");
-
       dispatch({ type: "LOAD", payload: [today, days, city] });
     } catch (e) {
       alert(
@@ -36,16 +33,16 @@ export default function Search() {
 
   // search func
   const check = async () => {
-    //check english letters
+    const regex = /[^\w\s]/g; // english letters
+
     if (search.search(regex) !== -1) {
       setSearch("");
       alert("Please write in English!");
     } else {
-      //if there's a search
       if (search !== "") {
         try {
           const data = await getData(search, 3);
-          setCities(data); //get cities in search
+          setCities(data);
         } catch (e) {
           setSearch("");
 
@@ -59,7 +56,7 @@ export default function Search() {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "10px" }}>
+    <div style={{ textAlign: "center" }}>
       <input
         type="text"
         value={search}

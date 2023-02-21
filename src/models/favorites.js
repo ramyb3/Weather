@@ -54,7 +54,7 @@ export default function Favorites(props) {
     }
   };
 
-  // if all favorites finished to load all data
+  // if all favorites didn't finished to load all data
   if (weather.length === 0) {
     return null;
   }
@@ -65,16 +65,8 @@ export default function Favorites(props) {
         return (
           <div key={index} className="favorites" onClick={() => display(index)}>
             <span>{props.favorites.name[index]}</span>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
-              <Temperature data={weather[index]} condition={storeData[1]} />
-              <span>{weather[index].WeatherText}</span>
-            </div>
+            <Temperature data={weather[index]} condition={storeData[1]} />
+            <span>{weather[index].WeatherText}</span>
           </div>
         );
       })}
