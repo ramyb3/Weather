@@ -1,21 +1,14 @@
 import HomePage from "./home";
 import Favorites from "./favorites";
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 export default function RouteComp() {
-  const [props, setProps] = useState({ key: [], name: [] });
-
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <HomePage favorites={props} callback={(data) => setProps(data)} />
-        }
-      />
-      <Route path="favorites" element={<Favorites favorites={props} />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="favorites" element={<Favorites />} />
     </Routes>
   );
 }
@@ -53,4 +46,14 @@ export const getData = async (obj, method) => {
 
     return [resp.data.LocalizedName, resp.data.Key]; //get this location
   }
+};
+
+export const useSaveDispatch = () => {
+  const dispatch = useDispatch();
+
+  const saveDispatch = (type, payload) => {
+    dispatch({ type, payload });
+  };
+
+  return { saveDispatch };
 };

@@ -1,11 +1,10 @@
-import { getData } from "./route";
+import { getData, useSaveDispatch } from "./route";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
 export default function Search() {
-  const dispatch = useDispatch();
+  const { saveDispatch } = useSaveDispatch();
   const [search, setSearch] = useState("");
   const [cities, setCities] = useState([]);
 
@@ -20,9 +19,8 @@ export default function Search() {
     try {
       const today = await getData(city[1], 1);
       const days = await getData(city[1], 2);
-
+      saveDispatch("LOAD", { today, days, data: city });
       setSearch("");
-      dispatch({ type: "LOAD", payload: [today, days, city] });
     } catch (e) {
       alert(
         "An error has occurred in location choosing! - check developer tools"
@@ -67,7 +65,7 @@ export default function Search() {
       <button onClick={check}>
         <FontAwesomeIcon icon={faSearch} />
       </button>
-      {cities.length !== 0 ? (
+      {cities.length > 0 ? (
         <div className="searchResults">
           {cities.map((city, index) => {
             return (

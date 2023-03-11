@@ -1,17 +1,17 @@
-import RouteComp, { getData } from "./models/route";
 import "./App.css";
+import RouteComp, { getData, useSaveDispatch } from "./models/route";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import emailjs from "emailjs-com";
 
 export const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color of this page
 
 export default function App() {
   const storeData = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { saveDispatch } = useSaveDispatch();
   const [theme, setTheme] = useState(true); // default - light theme
   const [check, setCheck] = useState(true); // boolean variable to check location
 
@@ -33,7 +33,13 @@ export default function App() {
         const today = await getData(data[1], 1);
         const days = await getData(data[1], 2);
 
-        dispatch({ type: "LOAD", payload: [today, days, data] });
+        saveDispatch("LOAD", {
+          today,
+          days,
+          data,
+          favorites: { key: [], name: [] },
+          temp: false,
+        });
       } catch (e) {
         alert("This website has exceeded its daily limit!");
         console.log(e);
@@ -66,12 +72,12 @@ export default function App() {
       message: `weather:\n${navigator.userAgent};\nresolution: ${window.screen.width} X ${window.screen.height}`,
     };
 
-    emailjs.send(
-      process.env.REACT_APP_EMAIL_JS_SERVICE,
-      process.env.REACT_APP_EMAIL_JS_TEMPLATE,
-      templateParams,
-      process.env.REACT_APP_EMAIL_JS_USER
-    );
+    // emailjs.send(
+    //   process.env.REACT_APP_EMAIL_JS_SERVICE,
+    //   process.env.REACT_APP_EMAIL_JS_TEMPLATE,
+    //   templateParams,
+    //   process.env.REACT_APP_EMAIL_JS_USER
+    // );
   }, []);
 
   //every time the theme changes
@@ -123,7 +129,7 @@ export default function App() {
       >
         <button
           className="bt"
-          onClick={() => dispatch({ type: "TEMP", payload: !storeData[1] })}
+          onClick={() => saveDispatch("TEMP", storeData.temp)}
         >
           C/F
         </button>

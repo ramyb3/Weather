@@ -1,20 +1,21 @@
 import Search from "./search";
+import { Temperature } from "./favorites";
+import { useSaveDispatch } from "./route";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
-import { Temperature } from "./favorites";
 
-export default function Home(props) {
+export default function Home() {
   const storeData = useSelector((state) => state);
+  const { saveDispatch } = useSaveDispatch();
 
   // favorites func
   const fav = () => {
-    if (!props.favorites.key.includes(storeData[0][2][1])) {
-      props.callback({
-        key: [...props.favorites.key, storeData[0][2][1]],
-        name: [...props.favorites.name, storeData[0][2][0]],
-      });
-    }
+    const type = !storeData.favorites.key.includes(storeData.data[1])
+      ? "FAV"
+      : "REMOVE_FAV";
+
+    saveDispatch(type, { key: storeData.data[1], name: storeData.data[0] });
   };
 
   // get day
@@ -36,8 +37,8 @@ export default function Home(props) {
   };
 
   // if the store not finished to load all data
-  if (storeData.length === 0) {
-    return null;
+  if (!storeData.today) {
+    return <></>;
   }
 
   return (
@@ -60,15 +61,15 @@ export default function Home(props) {
               gap: "0.5rem",
             }}
           >
-            <Image data={storeData[0][0].WeatherIcon} />
+            <Image data={storeData.today.WeatherIcon} />
             <div className="flex-column" style={{ gap: "0.2rem" }}>
-              <span>{storeData[0][2][0]}</span>
-              <Temperature data={storeData[0][0]} condition={storeData[1]} />
+              <span>{storeData.data[0]}</span>
+              <Temperature data={storeData.today} condition={storeData.temp} />
             </div>
           </div>
           <FontAwesomeIcon
             style={
-              props.favorites.key.includes(storeData[0][2][1])
+              storeData.favorites.key.includes(storeData.data[1])
                 ? { color: "red" }
                 : {}
             }
@@ -77,16 +78,16 @@ export default function Home(props) {
             className="heart"
           />
         </div>
-        <div className="weather">{storeData[0][0].WeatherText}</div>
+        <div className="weather">{storeData.today.WeatherText}</div>
         <div className="container">
-          {storeData[0][1].map((data, index) => {
+          {storeData.days.map((data, index) => {
             return (
               <div key={index} className="forecast">
                 <span>{day(data.Date)}</span>
                 <Image data={data[index !== 0 ? "Day" : "Night"].Icon} />
                 <Temperature
                   data={data.Temperature.Maximum.Value}
-                  condition={storeData[1]}
+                  condition={storeData.temp}
                 />
               </div>
             );
