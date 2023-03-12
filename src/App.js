@@ -12,7 +12,6 @@ export const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color 
 export default function App() {
   const storeData = useSelector((state) => state);
   const { saveDispatch } = useSaveDispatch();
-  const [theme, setTheme] = useState(true); // default - light theme
   const [check, setCheck] = useState(true); // boolean variable to check location
 
   //when app start
@@ -39,6 +38,7 @@ export default function App() {
           data,
           favorites: { key: [], name: [] },
           temp: false,
+          theme: true,
         });
       } catch (e) {
         alert("This website has exceeded its daily limit!");
@@ -72,19 +72,19 @@ export default function App() {
       message: `weather:\n${navigator.userAgent};\nresolution: ${window.screen.width} X ${window.screen.height}`,
     };
 
-    // emailjs.send(
-    //   process.env.REACT_APP_EMAIL_JS_SERVICE,
-    //   process.env.REACT_APP_EMAIL_JS_TEMPLATE,
-    //   templateParams,
-    //   process.env.REACT_APP_EMAIL_JS_USER
-    // );
+    emailjs.send(
+      process.env.REACT_APP_EMAIL_JS_SERVICE,
+      process.env.REACT_APP_EMAIL_JS_TEMPLATE,
+      templateParams,
+      process.env.REACT_APP_EMAIL_JS_USER
+    );
   }, []);
 
   //every time the theme changes
   useEffect(() => {
-    document.body.classList.add(theme ? "light" : "dark");
-    document.body.classList.remove(theme ? "dark" : "light");
-  }, [theme]);
+    document.body.classList.add(storeData.theme ? "light" : "dark");
+    document.body.classList.remove(storeData.theme ? "dark" : "light");
+  }, [storeData.theme]);
 
   // this button page will be colored
   const color = (e) => {
@@ -133,8 +133,11 @@ export default function App() {
         >
           C/F
         </button>
-        <button className="bt" onClick={() => setTheme(!theme)}>
-          <FontAwesomeIcon icon={!theme ? faSun : faMoon} />
+        <button
+          className="bt"
+          onClick={() => saveDispatch("THEME", storeData.theme)}
+        >
+          <FontAwesomeIcon icon={storeData.theme ? faMoon : faSun} />
         </button>
       </div>
       <RouteComp />

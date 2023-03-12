@@ -16,8 +16,12 @@ export default function Favorites() {
       const arr = [];
 
       for (let i = 0; i < storeData.favorites.key.length; i++) {
-        const obj = await getData(storeData.favorites.key[i], 1);
-        arr.push(obj);
+        try {
+          const obj = await getData(storeData.favorites.key[i], 1);
+          arr.push(obj);
+        } catch (e) {
+          console.log(e);
+        }
       }
 
       setWeather(arr);

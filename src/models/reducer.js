@@ -21,6 +21,10 @@ function reducer(state = {}, action) {
       state.temp = !action.payload;
       return { ...state };
     }
+    case "THEME": {
+      state.theme = !action.payload;
+      return { ...state };
+    }
 
     default:
       return state;
