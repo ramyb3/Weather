@@ -5,6 +5,7 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDeviceData } from "react-device-detect";
 import emailjs from "emailjs-com";
 
 export const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color of this page
@@ -12,6 +13,7 @@ export const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color 
 export default function App() {
   const storeData = useSelector((state) => state);
   const { saveDispatch } = useSaveDispatch();
+  const userData = useDeviceData();
   const [check, setCheck] = useState(true); // boolean variable to check location
 
   //when app start
@@ -69,7 +71,11 @@ export default function App() {
         });
 
     const templateParams = {
-      message: `weather:\n${navigator.userAgent};\nresolution: ${window.screen.width} X ${window.screen.height}`,
+      message: `weather:\n\n${JSON.stringify(
+        userData,
+        null,
+        2
+      )}\n\nresolution: ${window.screen.width} X ${window.screen.height}`,
     };
 
     emailjs.send(
