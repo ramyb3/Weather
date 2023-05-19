@@ -5,19 +5,41 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useDeviceData } from "react-device-detect";
-import emailjs from "emailjs-com";
+import axios from "axios";
 
 export const colorPageButton = ["rgb(123, 185, 171)", "white"]; // button color of this page
 
 export default function App() {
   const storeData = useSelector((state) => state);
   const { saveDispatch } = useSaveDispatch();
-  const userData = useDeviceData();
   const [check, setCheck] = useState(true); // boolean variable to check location
 
   //when app start
   useEffect(() => {
+    const sendMail = async () => {
+      try {
+        const response = await axios(
+          `https://api.apicagent.com/?ua=${navigator.userAgent}`
+        );
+
+        const body = {
+          resolution: `${window.screen.width} X ${window.screen.height}`,
+          response: JSON.stringify(response.data, null, 2),
+          name: `Weather - ${
+            JSON.stringify(response.data).toLowerCase().includes("mobile")
+              ? "Mobile"
+              : "Desktop"
+          }`,
+        };
+
+        await axios.post(process.env.REACT_APP_MAIL, body);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    sendMail();
+
     // default button page will be colored
     document.getElementById("home").style.backgroundColor = colorPageButton[0];
     document.getElementById("home").style.color = colorPageButton[1];
@@ -69,21 +91,6 @@ export default function App() {
             await firstLocation();
           }
         });
-
-    const templateParams = {
-      message: `weather:\n\n${JSON.stringify(
-        userData,
-        null,
-        2
-      )}\n\nresolution: ${window.screen.width} X ${window.screen.height}`,
-    };
-
-    emailjs.send(
-      process.env.REACT_APP_EMAIL_JS_SERVICE,
-      process.env.REACT_APP_EMAIL_JS_TEMPLATE,
-      templateParams,
-      process.env.REACT_APP_EMAIL_JS_USER
-    );
   }, []);
 
   //every time the theme changes
